@@ -3,7 +3,20 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { videos } from "@/data/site";
+const videos = [
+  {
+    id: 1,
+    title: "Documentary Story",
+    category: "NGO Storytelling",
+    url: "https://www.youtube.com/embed/qccMmjNmSrw",
+  },
+  {
+    id: 2,
+    title: "Community Impact",
+    category: "Field Report",
+    url: "https://www.youtube.com/embed/qCTNqgtBMhs",
+  },
+];
 
 const categories = [
   "All",
