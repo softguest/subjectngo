@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { videos } from "@/data/site";
 
 const categories = [
   "All",
@@ -111,39 +112,37 @@ export default function Portfolio() {
         </motion.div>
 
         {/* Masonry Grid */}
-        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project) => (
+        <motion.div
+          layout
+          className="mt-16 grid sm:grid-cols-2 gap-6"
+        >
+          <AnimatePresence>
+            {videos.map((video) => (
               <motion.div
-                key={project.title}
+                key={video.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5 }}
-                className="group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3]"
-                onClick={() => setSelectedProject(project)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="overflow-hidden rounded-2xl border border-border bg-card"
               >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/40 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500" />
-                
-                {/* Play Button */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <div className="w-16 h-16 rounded-full bg-gold-500/90 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform">
-                    <svg className="w-6 h-6 text-dark-950 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
+                <div className="aspect-video">
+                  <iframe
+                    src={video.url}
+                    title={video.title}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 </div>
 
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                  <div className="text-xs text-gold-400 mb-1">{project.category} · {project.year}</div>
-                  <h3 className="text-xl font-semibold">{project.title}</h3>
+                <div className="p-4">
+                  <div className="text-[10px] uppercase tracking-[0.25em] text-gold">
+                    {video.category}
+                  </div>
+                  <h3 className="mt-2 font-display text-xl">
+                    {video.title}
+                  </h3>
                 </div>
               </motion.div>
             ))}
